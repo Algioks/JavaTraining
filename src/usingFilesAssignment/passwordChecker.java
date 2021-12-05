@@ -60,7 +60,6 @@ public class passwordChecker {
             boolean hasletter = false;
             boolean hasnumber = false;
             boolean hasspecialCharacter = false;
-            boolean hasInvalidCharacter = false;
 
             for (int n = 0; n < password.length(); n++) {
                 if ("0123456789".contains((password.substring(n, n + 1)))) {
