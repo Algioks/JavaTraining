@@ -41,11 +41,6 @@ public class passwordChecker {
         String fileName = "C:\\Users\\PC\\Desktop\\projects\\JavaTraining\\Files\\passwords.txt";
         File file = new File(fileName);
         String[] passwords = new String[13];
-        String password = null;
-
-        boolean letterFlag = false;
-        boolean numberFlag = false;
-        boolean specialCharacterFlag = false;
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
@@ -59,74 +54,97 @@ public class passwordChecker {
             System.out.println("ERROR: Could not read the file: " + fileName);
         }
 
-        for (int i = 0; i < passwords.length; i++) {
-            password = passwords[i];
 
-                try {
-                    for (int n = 0; n < password.length(); n++) {
-                        if (password.) {
-                            if (password.substring(n + 1, (n + 3)).equals("12")) {
-                                throw new passwordMissingANumber(password);
-                            }
-                        }
+        for (String password : passwords) {
+            System.out.println("***********\n" + password);
+            boolean hasletter = false;
+            boolean hasnumber = false;
+            boolean hasspecialCharacter = false;
+            boolean hasInvalidCharacter = false;
+
+            for (int n = 0; n < password.length(); n++) {
+                if ("0123456789".contains((password.substring(n, n + 1)))) {
+                    //System.out.println("Position " + n + " contains a number");
+                    hasnumber = true;
+                } else if ("abcdefghijklmnoprstuvwxyzq".contains((password.substring(n, n + 1).toLowerCase()))) {
+                    //System.out.println("Position " + n + " contains a letter");
+                    hasletter = true;
+                } else if ("!@#$%^&*()_-~=`[]'/*-+.?:".contains((password.substring(n, n + 1)))) {
+                    //System.out.println("Position " + n + " contains a special character");
+                    hasspecialCharacter = true;
+                } else {
+                    try {
+                        throw new InvalidCharacterException(password.substring(n, n + 1));
+                    } catch (InvalidCharacterException e) {
+                        e.toString();
                     }
-                if (password) {
-                    throw new passwordMissingALetter(password);
                 }
-                for (int n = 0; n < password.length() - 2; n++) {
-                    if (password) {
-                    throw new passwordMissingASpecialCharacter(password);
-                    }
+            }
+            try {
+                if (!hasnumber) {
+                    System.out.println("Password is INVALID");
+                    throw new passwordMissingANumberException(password);
+                } else if (!hasletter) {
+                    System.out.println("Password is INVALID");
+                    throw new passwordMissingALetterException(password);
+                } else if (!hasspecialCharacter) {
+                    System.out.println("Password is INVALID");
+                    throw new passwordMissingASpecialCharacterException(password);
+                } else {
+                    System.out.println("Password is valid");
                 }
-                System.out.println(passwords);
-            } catch (passwordMissingANumber e) {
-                System.out.println("ERROR: password is missing a number");
-                System.out.println(e.toString());
-            } catch (passwordMissingALetter e) {
-                System.out.println("ERROR: password is missing a letter");
-                System.out.println(e.toString());
-            } catch (passwordMissingASpecialCharacter e) {
-                System.out.println("ERROR: password is missing a special character");
-                System.out.println(e.toString());
-            } finally {
-                System.out.println("Closing the Password checking program");
+
+            } catch (passwordMissingALetterException | passwordMissingANumberException | passwordMissingASpecialCharacterException e) {
+                e.printStackTrace();
             }
         }
-
-    }
-}
-class passwordMissingANumber extends Exception {
-    String password;
-
-    passwordMissingANumber(String password) {
-        this.password = password;
-    }
-
-    public String toString() {
-        return ("The password is missing a number: " + password);
+        System.out.println("Closing password checking app");
     }
 }
 
-class passwordMissingALetter extends Exception {
-    String password;
+    class InvalidCharacterException extends Exception {
+        String ch;
+        InvalidCharacterException(String ch) {
+            this.ch = ch;
+        }
 
-    passwordMissingALetter(String password) {
-        this.password = password;
+        public String toString() {
+            return ("invalidCharacterException: " + ch);
+        }
     }
 
-    public String toString() {
-        return ("The password is missing a letter: " + password);
-    }
-}
+    class passwordMissingANumberException extends Exception {
+        String password;
 
-class passwordMissingASpecialCharacter extends Exception {
-    String password;
+        passwordMissingANumberException(String password) {
+            this.password = password;
+        }
 
-    passwordMissingASpecialCharacter(String password) {
-        this.password = password;
+        public String toString() {
+            return ("The password is missing a number: " + password);
+        }
     }
 
-    public String toString() {
-        return ("The password is missing a special character: " + password);
+    class passwordMissingALetterException extends Exception {
+        String password;
+
+        passwordMissingALetterException(String password) {
+            this.password = password;
+        }
+
+        public String toString() {
+            return ("The password is missing a letter: " + password);
+        }
     }
-}
+
+    class passwordMissingASpecialCharacterException extends Exception {
+        String password;
+
+        passwordMissingASpecialCharacterException(String password) {
+            this.password = password;
+        }
+
+        public String toString() {
+            return ("The password is missing a special character: " + password);
+        }
+    }
