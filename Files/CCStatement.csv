@@ -1,9 +1,10 @@
 Spe02,CREDIT,CostCo,342.23
 Spe09,CREDIT,ATT,93.42
 Spe10,CREDIT,Applebees,56.2
-Spe11,AppleStore,995.95
-Spe12,ACHPayment,500
-Spe19,Speedway,35.09
-Spe20,McDonalds,12.55
-Spe21,ACHPayment,600
-Spe26,ACHPayment,250
+Spe11,CREDIT,AppleStore,995.95
+Spe12,DEBIT, ACHPayment,500
+Spe19,CREDIT,Speedway,35.09
+Spe20,CREDIT,McDonalds,12.55
+Spe21,DEBIT,ACHPayment,600
+Spe26,DEBIT,ACHPayment,250
+Sep30,FEE,MasterCard,2.50
