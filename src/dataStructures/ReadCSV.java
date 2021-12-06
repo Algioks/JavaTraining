@@ -13,7 +13,7 @@ public class ReadCSV {
 
         //this method will read data from csv file
         List<String[]> data = new ArrayList<String[]>();
-        String fileName = "C:\\Users\\PC\\Desktop\\projects\\JavaTraining\\Files\\as.csv";
+        String fileName = "C:\\Users\\PC\\Desktop\\projects\\JavaTraining\\Files\\accounts.csv";
         String dataRow;
 
         try {
